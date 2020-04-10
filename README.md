@@ -13,9 +13,9 @@ Prereqs:
   
   Steps : 
   1.  Create a project of any convention name .In my case I have created project with name 'servicenow'
-  2.  create cluster role using the file 
-      oc apply -f servicenow-cluster-role.yml
-  3.  Create a serviceaccount 
-      oc create sa  svcsnow
-  4.  Create cluster role binding 
+  2.  create cluster role using the yml file => 
+      $oc apply -f servicenow-cluster-role.yml
+  3.  Create a serviceaccount =>
+      $oc create sa  svcsnow
+  4.  Create cluster role binding =>
       oc apply -f  snow-cluster-role-binding.yml
