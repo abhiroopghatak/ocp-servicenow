@@ -12,6 +12,7 @@ rules:
   resources:
   - pods
   - pods/log
+  - projects
   - namespaces
   - events
   - configmaps
@@ -21,7 +22,6 @@ rules:
   - list
   - create
   - update
-  - delete
   - patch
   - watch
 - apiGroups:
