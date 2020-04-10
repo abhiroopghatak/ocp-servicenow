@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ClusterRole
+metadata:
+  annotations:
+    openshift.io/description: Cluster role for service account which third party will use to access over namespace craetion and other related objects
+    openshift.io/reconcile-protect: "false"
+  name: servicenow-view-create
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/log
+  - namespaces
+  - events
+  - configmaps
+  - persistentvolumeclaims
+  verbs:
+  - get
+  - list
+  - create
+  - update
+  - delete
+  - patch
+  - watch
+- apiGroups:
+  - ""
+  attributeRestrictions: null
+  resources:
+  - services
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ""
+  attributeRestrictions: null
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
