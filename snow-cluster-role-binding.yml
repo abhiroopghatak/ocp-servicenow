@@ -12,5 +12,5 @@ roleRef:
   name: servicenow-view-create
 subjects:
 - kind: ServiceAccount
-  name: svcsnow-at
+  name: svcsnow
   namespace: servicenow
