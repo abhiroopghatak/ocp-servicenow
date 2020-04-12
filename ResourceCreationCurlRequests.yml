@@ -1,0 +1,55 @@
+######################### resourcequotas CREATE #####################
+curl -k \
+    -X POST \
+    -d @- \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://{cluster api END POINT}/api/v1/namespaces/${namespace}/resourcequotas <<'EOF'
+	{
+	  "kind": "ResourceQuota",
+	  "apiVersion": "v1",
+	  "metadata": {
+		"name": "compute-resource-quota-test",
+		"namespace": "${namespace}"
+	  },
+	  "spec": {
+		"hard": {
+		  "limits.cpu": "1",
+		  "limits.memory": "4Gi",
+		  "pods": "10"
+		}
+	  }
+	}
+	EOF
+
+#########################limitranges CREATE #####################
+curl -k \
+    -X POST \
+    -d @- \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://${cluster api END POINT}/api/v1/namespaces/${namespace}/limitranges <<'EOF'
+	{
+	  "apiVersion": "v1",
+	  "kind": "LimitRange",
+	  "metadata": {
+		"name": "mem-limit-range",
+		"namespace": "${namespace}"
+	  },
+	  "spec": {
+		"limits": [
+		  {
+			"default": {
+			  "memory": "512Mi"
+			},
+			"defaultRequest": {
+			  "memory": "256Mi"
+			},
+			"type": "Container"
+		  }
+		]
+	  }
+	}
+	EOF
