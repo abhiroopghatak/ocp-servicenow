@@ -8,10 +8,11 @@ metadata:
 rules:
 - apiGroups:
   - ""
+  - quota.openshift.io
   - project.openshift.io
   resources:
   - pods
-  - pods/log
+  - resourcequotas
   - projects
   - namespaces
   - events
