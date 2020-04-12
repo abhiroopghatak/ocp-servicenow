@@ -1,3 +1,26 @@
+
+######################### Project CREATE #####################
+curl -k \
+    -X POST \
+    -d @- \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://${cluster api END POINT}/apis/project.openshift.io/v1/projects <<'EOF'
+	{
+	  "kind": "Project",
+      "apiVersion": "project.openshift.io/v1",
+      "metadata": {"name": "${projectname}"},
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    }
+	EOF
 ######################### resourcequotas CREATE #####################
 curl -k \
     -X POST \
