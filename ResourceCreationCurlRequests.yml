@@ -1,4 +1,8 @@
-
+#################################### Get one project VIEW ##############
+curl -k \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    https://{cluster api END POINT}/apis/project.openshift.io/v1/projects/${projectname}
 
 #################################### projectList VIEW ##############
 curl -k \
