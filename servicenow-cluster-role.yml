@@ -10,6 +10,7 @@ rules:
   - ""
   - "\\"
   - rbac.authorization.k8s.io
+  - roles.rbac.authorization.k8s.io
   - quota.openshift.io
   - project.openshift.io
   resources:
@@ -17,6 +18,7 @@ rules:
   - resourcequotas
   - limitranges
   - projects
+  - projectrequests
   - namespaces
   - rolebindings
   - clusterrolebindings
