@@ -9,6 +9,7 @@ rules:
 - apiGroups:
   - ""
   - "\\"
+  - rbac.authorization.k8s.io
   - quota.openshift.io
   - project.openshift.io
   resources:
@@ -17,9 +18,8 @@ rules:
   - limitranges
   - projects
   - namespaces
-  - events
-  - configmaps
-  - persistentvolumeclaims
+  - rolebindings
+  - clusterrolebindings
   verbs:
   - get
   - list
