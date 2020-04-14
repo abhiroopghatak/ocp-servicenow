@@ -1,5 +1,38 @@
 
+#################################### Get one project VIEW ##############
+curl -k \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    https://{cluster api END POINT}/apis/project.openshift.io/v1/projects/${projectname}
 
+#################################### projectList VIEW ##############
+curl -k \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    https://{cluster api END POINT}/apis/project.openshift.io/v1/projects
+    
+######################### Project CREATE #####################
+curl -k \
+    -X POST \
+    -d @- \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://${cluster api END POINT}/apis/project.openshift.io/v1/projects <<'EOF'
+	{
+	  "kind": "Project",
+      "apiVersion": "project.openshift.io/v1",
+      "metadata": {"name": "${projectname}"},
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    }
+	EOF
 
 ############################### ProjectRequest CREATE ########################
 
