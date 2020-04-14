@@ -1,15 +1,15 @@
 
 	
-################## ROle Binding CREATE ########
+################## ROLEBINDING CREATION#################
 curl -k \
     -X POST \
     -d @- \
-    -H "Authorization: Bearer ${token}" \
+    -H "Authorization: Bearer ${TOKEN}" \
     -H 'Accept: application/json' \
     -H 'Content-Type: application/json' \
-    https://${cluster END POINT}/apis/rbac.authorization.k8s.io/v1/clusterrolebindings <<'EOF'
+    https://${cluster api end point}/apis/rbac.authorization.k8s.io/v1/namespaces/svcsnow-test-project/rolebindings <<'EOF'
 	{
-	  "kind": "ClusterRoleBinding",
+	  "kind": "RoleBinding",
 	  "apiVersion": "rbac.authorization.k8s.io/v1",
 	  "metadata": {
 		"name": "svcsnow-test-project-binding",
@@ -25,7 +25,7 @@ curl -k \
 	  "roleRef": {
 		"apiGroup": "rbac.authorization.k8s.io",
 		"kind": "ClusterRole",
-		"name": "edit"
+		"name": "admin"
 	  }
     }
 	EOF
