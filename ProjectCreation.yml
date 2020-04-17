@@ -58,3 +58,29 @@ curl -k \
       }
     }
 	EOF
+###################################### NAMEPSACE UPDATE #######################
+
+curl -k \
+    -X PUT \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$END POINT/api/v1/namespaces/svcsnow-test-project <<'EOF'
+	{
+	  "kind": "Namespace",
+	  "apiVersion": "v1",
+	  "metadata": {
+		"name": "svcsnow-test-project",
+		"labels": {
+		  "abc": "true-or-false"
+		},
+		"annotations": {
+		  "openshift.io/description": "project description text from servicenow portal",
+		  "openshift.io/display-name": "project display-name , text from servicenow portal",
+		  "openshift.io/node-selector": "appfrontend=true",
+		  "openshift.io/requester": "abhiroop"
+		}
+	  }
+	}
+	EOF
