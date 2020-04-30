@@ -1,0 +1,8 @@
+
+######################  DELETE PROJECT #######
+	
+	curl -k \
+    -X DELETE \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    $ENDPOINT/apis/project.openshift.io/v1/projects/test-1
