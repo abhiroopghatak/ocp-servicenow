@@ -16,6 +16,6 @@ Prereqs:
   2.  create cluster role using the yml file => 
       $oc apply -f servicenow-cluster-role.yml
   3.  Create a serviceaccount =>
-      $oc create sa  svcsnow
+      $oc create sa  my-service-account
   4.  Create cluster role binding =>
       oc apply -f  snow-cluster-role-binding.yml
