@@ -1,3 +1,4 @@
+######################## yaml file to create role binding of the service account ####
 # Please edit the object below. Lines beginning with a '#' will be ignored,
 # and an empty file will abort the edit. If an error occurs while saving this file will be
 # reopened with the relevant failures.
@@ -12,5 +13,5 @@ roleRef:
   name: servicenow-view-create
 subjects:
 - kind: ServiceAccount
-  name: svcsnow
+  name: myserviceaccount
   namespace: servicenow
