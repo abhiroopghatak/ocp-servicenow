@@ -1,0 +1,108 @@
+################## RESOURCE QUOTA CREATION#################
+curl -k \
+    -X POST \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$ENDPOINT/api/v1/namespaces/my-test-project/resourcequotas <<'EOF'
+	{
+	  "kind": "ResourceQuota",
+	  "apiVersion": "v1",
+	  "metadata": {
+		"name": "my-project-resource-quota",
+		"namespace": "my-test-project"
+	  },
+	  "spec": {
+		"hard": {
+		  "limits.cpu": "2",
+		  "limits.memory": "8Gi",
+		  "persistentvolumeclaims": "15",
+		  "pods": "10",
+		  "requests.storage": "5Gi"
+		}
+	  }
+	}
+	EOF
+	
+	
+	################## RESOURCE QUOTA UPDATE #################
+curl -k \
+    -X PUT \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$ENDPOINT/api/v1/namespaces/my-test-project/resourcequotas/my-project-resource-quota <<'EOF'
+	{
+	  "kind": "ResourceQuota",
+	  "apiVersion": "v1",
+	  "metadata": {
+		"name": "my-project-resource-quota",
+		"namespace": "my-test-project"
+	  },
+	  "spec": {
+		"hard": {
+		  "limits.cpu": "2",
+		  "limits.memory": "8Gi",
+		  "persistentvolumeclaims": "2",
+		  "pods": "10",
+		  "requests.storage": "20Gi"
+		}
+	  }
+	}
+	EOF
+	
+	
+
+################## LIMIT RANGE CREATION#################
+curl -k \
+    -X POST \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$ENDPOINT/api/v1/namespaces/my-test-project/limitranges <<'EOF'
+	{
+	  "kind": "LimitRange",
+	  "apiVersion": "v1",
+	  "metadata": {
+		"name": "core-resource-limits",
+		"namespace": "my-test-project"
+	  },
+	  "spec": {
+		"limits": [
+		  {
+			"type": "Pod",
+			"max": {
+			  "cpu": "2",
+			  "memory": "12Gi"
+			},
+			"min": {
+			  "cpu": "100m",
+			  "memory": "4Mi"
+			}
+		  },
+		  {
+			"type": "Container",
+			"max": {
+			  "cpu": "2",
+			  "memory": "12Gi"
+			},
+			"min": {
+			  "cpu": "100m",
+			  "memory": "8Mi"
+			},
+			"default": {
+			  "cpu": "200m",
+			  "memory": "600Mi"
+			},
+			"defaultRequest": {
+			  "cpu": "100m",
+			  "memory": "500Mi"
+			}
+		  }
+		]
+	  }
+	}
+	EOF
