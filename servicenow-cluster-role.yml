@@ -1,3 +1,4 @@
+############### YAML to create ClusterRole for the 3rd party serviceaccount #############
 apiVersion: v1
 kind: ClusterRole
 metadata:
@@ -16,7 +17,6 @@ rules:
   resources:
   - resourcequotas
   - limitranges
-  - projects
   - projectrequests
   - namespaces
   - rolebindings
