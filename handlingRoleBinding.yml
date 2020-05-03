@@ -1,0 +1,78 @@
+
+	
+	
+################## ROLEBINDING CREATION#################
+curl -k \
+    -X POST \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$ENDPOINT/apis/rbac.authorization.k8s.io/v1/namespaces/svcsnow-test-project/rolebindings <<'EOF'
+	{
+	  "kind": "RoleBinding",
+	  "apiVersion": "rbac.authorization.k8s.io/v1",
+	  "metadata": {
+		"name": "ad-group-edit",
+		"namespace": "svcsnow-test-project"
+	  },
+	  "subjects": [
+		{
+		  "kind": "Group",
+		  "apiGroup": "rbac.authorization.k8s.io",
+		  "name": "svctest"
+		}
+	  ],
+	  "roleRef": {
+		"apiGroup": "rbac.authorization.k8s.io",
+		"kind": "ClusterRole",
+		"name": "edit"
+	  }
+    }
+	EOF
+	
+	
+	#####################  ROLE BINDING PUT REQUEST   ( REQUIRED if provide delete access to service account)########
+	
+	curl -k \
+    -X PUT \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$ENDPOINT/apis/rbac.authorization.k8s.io/v1/namespaces/svcsnow-test-project/rolebindings/admin <<'EOF'
+	{
+	  "kind": "RoleBinding",
+	  "apiVersion": "rbac.authorization.k8s.io/v1",
+	  "metadata": {
+		"name": "admin",
+		"namespace": "svcsnow-test-project"
+	  },
+	  "subjects": [
+		{
+		  "kind": "Group",
+		  "apiGroup": "rbac.authorization.k8s.io",
+		  "name": "svctest"
+		}
+	  ],
+	  "roleRef": {
+		"apiGroup": "rbac.authorization.k8s.io",
+		"kind": "ClusterRole",
+		"name": "admin"
+	  }
+    }
+	EOF
+	
+	#############  DELETE ROLE BINDING ######
+	
+	curl -k \
+    -X DELETE \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$ENDPOINT/apis/rbac.authorization.k8s.io/v1/namespaces/svcsnow-test-project/rolebindings/admin <<'EOF'
+	{
+	  
+	}
+	EOF
