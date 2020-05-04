@@ -1,0 +1,57 @@
+##############################SECRET CREATION WITH PARAM VALUES DATA ##############
+
+$ curl -k \
+    -X POST \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$ENDPOINT/api/v1/namespaces/$NAMESPACE/secrets <<'EOF'
+{
+  "kind": "Secret",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "PROJECT_NAME-secret"
+  },
+  "stringData": {
+	"PROJECT_DESCRIPTION": "my template instance project description",
+	"PROJECT_DISPLAYNAME": "my template instance project displayname",
+	"PROJECT_REQUESTING_USER": "abhiroop",
+	"PROJECT_NAME": "abhiroop-template-project",
+	"PROJECT_CPU": "1",
+	"PROJECT_MEMORY": "4Gi",
+	"PROJECT_STORAGE": "10Gi"
+  }
+}
+EOF
+
+####################### Project servicenow
+
+
+
+$ curl -k \
+    -X POST \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$ENDPOINT/apis/template.openshift.io/v1/namespaces/$NAMESPACE/templateinstances <<EOF
+{
+  "kind": "TemplateInstance",
+  "apiVersion": "template.openshift.io/v1",
+  "metadata": {
+    "name": "project-request-instance"
+  },
+  "spec": {
+    "secret": {
+      "name": "PROJECT_NAME-secret"
+    },
+    "template": $(curl -k \
+                    -H "Authorization: Bearer $TOKEN" \
+                    -H 'Accept: application/json' \
+                    https://$ENDPOINT/apis/template.openshift.io/v1/namespaces/$NAMESPACE/templates/project-request)
+  }
+}
+EOF
+
+######################
