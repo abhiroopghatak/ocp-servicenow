@@ -42,11 +42,17 @@ Prereqs:
   Steps : 
   
       1.  Create a namespace e.g. 'myprojectautomation' in openshift.
+              $oc new-project myprojectautomation
       2.  Create a serviceaccount 'my-service-account'
+              $oc create sa  my-service-account
       3.  Create a cluster role where you put resources , api grpoups and verbs .
-      4.  Craete a role binding and provide the above role to your serviceaccount.
+             $oc apply -f servicenow-cluster-role.yml
+      4.  Craete a role binding and provide the above role to your serviceaccount. (verify namespaces /sa name in files)
+             $oc apply -f  snow-cluster-role-binding.yml
       5.  Access service account 'template-instance-controller' in project openshift-infra .
+             $oc describe sa template-instance-controller -n openshift-infra
       6.  Create a role binding and provide same role (step 3) to this service account.
+             $oc apply -f /template-driven/template-instance-controller-role-binding.yml
       7.  Create a project request template in your namespace 'myprojectautomation' 
           mentioning all parameters that are dynamic.
       8.  Create a secret in the same namespace mentioning all param values.
