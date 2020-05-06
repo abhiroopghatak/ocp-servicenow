@@ -56,7 +56,8 @@ Prereqs:
       7.  Create a project request template in your namespace 'myprojectautomation' 
           mentioning all parameters that are dynamic.
       8.  Create a secret in the same namespace mentioning all param values.
-      9.  Post api call to 
+          #Curl request provided at : /template-driven/templateinstantiation.txt
+      9.  Post api call to (#Curl request provided at : /template-driven/templateinstantiation.txt)
           https://$ENDPOINT/apis/template.openshift.io/v1/namespaces/$NAMESPACE/templateinstances
           providing the secret , you just craeted.
       10. Verify  template instance object has been craeted or not.
