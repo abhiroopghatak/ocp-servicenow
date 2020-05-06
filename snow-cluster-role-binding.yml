@@ -13,5 +13,5 @@ roleRef:
   name: servicenow-view-create
 subjects:
 - kind: ServiceAccount
-  name: myserviceaccount
+  name: my-service-account
   namespace: servicenow
