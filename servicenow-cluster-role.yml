@@ -14,6 +14,7 @@ rules:
   - rbac.authorization.k8s.io
   - quota.openshift.io
   - project.openshift.io
+  - template.openshift.io
   resources:
   - resourcequotas
   - limitranges
@@ -21,6 +22,10 @@ rules:
   - namespaces
   - rolebindings
   - clusterrolebindings
+  - templates
+  - templateinstances
+  - templateconfigs
+  - secrets
   verbs:
   - get
   - list
