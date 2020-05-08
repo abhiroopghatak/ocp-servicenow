@@ -19,6 +19,7 @@ rules:
   - resourcequotas
   - limitranges
   - projectrequests
+  
   - namespaces
   - rolebindings
   - clusterrolebindings
