@@ -20,7 +20,8 @@ $ curl -k \
 	"PROJECT_NAME": "abhiroop-template-project",
 	"PROJECT_CPU": "1",
 	"PROJECT_MEMORY": "4Gi",
-	"PROJECT_STORAGE": "10Gi"
+	"PROJECT_STORAGE": "10Gi",
+	"PROJECT_AD_GROUP": "scvtest"
   }
 }
 EOF
