@@ -1,6 +1,7 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
+  creationTimestamp: null
   name: project-request-template
   namespace: servicenow
 objects:
@@ -10,8 +11,8 @@ objects:
     annotations:
       openshift.io/description: ${PROJECT_DESCRIPTION}
       openshift.io/display-name: ${PROJECT_DISPLAYNAME}
-      openshift.io/node-selector: appworker=true
       openshift.io/requester: ${PROJECT_REQUESTING_USER}
+      openshift.io/node-selector: "appworker=true"
     creationTimestamp: null
     name: ${PROJECT_NAME}
   spec: {}
@@ -28,8 +29,8 @@ objects:
     name: edit
   subjects:
   - apiGroup: rbac.authorization.k8s.io
-    kind: User
-    name: ${PROJECT_REQUESTING_USER}
+    kind: Group
+    name: ${PROJECT_AD_GROUP}
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: RoleBinding
   metadata:
@@ -42,32 +43,32 @@ objects:
     name: admin
   subjects:
   - apiGroup: rbac.authorization.k8s.io
-    kind: User
-    name: ocpadmin
+    kind: Group
+    name: ocp-admin-local-group
 - apiVersion: v1
-  kind: LimitRange
+  kind: "LimitRange"
   metadata:
-    name: ${PROJECT_NAME}-limits
+    name: ${PROJECT_NAME}-limitrange
     namespace: ${PROJECT_NAME}
   spec:
-    limits:
-    - max:
+   limits:
+     - type: "Pod"
+       max:
         cpu: "2"
-        memory: 12Gi
-      type: Pod
-    - default:
-        cpu: 200m
-        memory: 600Mi
-      defaultRequest:
-        cpu: 100m
-        memory: 500Mi
-      max:
+        memory: "12Gi"
+     - type: "Container"
+       max:
         cpu: "2"
-        memory: 12Gi
-      min:
-        cpu: 100m
-        memory: 4Mi
-      type: Container
+        memory: "12Gi"
+       min:
+        cpu: "100m"
+        memory: "4Mi"
+       default:
+        cpu: "200m"
+        memory: "600Mi"
+       defaultRequest:
+        cpu: "100m"
+        memory: "500Mi"
 - apiVersion: v1
   kind: ResourceQuota
   metadata:
@@ -75,11 +76,11 @@ objects:
     namespace: ${PROJECT_NAME}
   spec:
     hard:
+      pods: "20"
       limits.cpu: ${PROJECT_CPU}
       limits.memory: ${PROJECT_MEMORY}
-      persistentvolumeclaims: "5"
-      pods: "20"
       requests.storage: ${PROJECT_STORAGE}
+      persistentvolumeclaims: "5"
 parameters:
 - name: PROJECT_NAME
 - name: PROJECT_DISPLAYNAME
@@ -88,3 +89,4 @@ parameters:
 - name: PROJECT_CPU
 - name: PROJECT_MEMORY
 - name: PROJECT_STORAGE
+- name: PROJECT_AD_GROUP
