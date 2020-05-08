@@ -11,7 +11,7 @@ $ curl -k \
   "kind": "Secret",
   "apiVersion": "v1",
   "metadata": {
-    "name": "PROJECT_NAME-secret"
+    "name": "projectname-secret"
   },
   "stringData": {
 	"PROJECT_DESCRIPTION": "my template instance project description",
@@ -45,7 +45,7 @@ $ curl -k \
   },
   "spec": {
     "secret": {
-      "name": "PROJECT_NAME-secret"
+      "name": "projectname-secret"
     },
     "template": $(curl -k \
                     -H "Authorization: Bearer $TOKEN" \
