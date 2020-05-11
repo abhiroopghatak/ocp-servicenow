@@ -1,0 +1,46 @@
+############### YAML to create ClusterRole for the 3rd party serviceaccount #############
+apiVersion: v1
+kind: ClusterRole
+metadata:
+  annotations:
+    openshift.io/description: Cluster role for service account which third party will use to access over namespace creation and other related objects
+    openshift.io/reconcile-protect: "false"
+  name: servicenow-view-create
+rules:
+- apiGroups:
+  - ""
+  - "\\"
+  - roles.rbac.authorization.k8s.io
+  - rbac.authorization.k8s.io
+  - quota.openshift.io
+  - project.openshift.io
+  resources:
+  - resourcequotas
+  - limitranges
+  - projectrequests
+  - projects
+  - namespaces
+  - rolebindings
+  - clusterrolebindings
+  verbs:
+  - get
+  - list
+  - create
+  - update
+  - patch
+  - watch
+- apiGroups:
+  - template.openshift.io
+  - "\\"
+  - ""
+  resources:
+  - templateinstances
+  - templateinstances/status
+  - templates
+  - templateconfigs
+  - secrets
+  verbs:
+  - get
+  - list
+  - create
+  - delete
