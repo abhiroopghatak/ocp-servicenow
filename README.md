@@ -46,7 +46,7 @@ Prereqs:
       2.  Create a serviceaccount 'my-service-account'
               $oc create sa  my-service-account
       3.  Create a cluster role where you put resources , api grpoups and verbs .
-             $oc apply -f servicenow-cluster-role.yml
+             $oc apply -f template-driven/sa-role.yaml
       4.  Craete a role binding and provide the above role to your serviceaccount. (verify namespaces /sa name in files)
              $oc apply -f  snow-cluster-role-binding.yml
       5.  Access service account 'template-instance-controller' in project openshift-infra .
