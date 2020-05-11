@@ -1,6 +1,5 @@
-##############################SECRET CREATION WITH PARAM VALUES DATA ##############
-
-$ curl -k \
+##################CREATE SECRET ################
+curl -k \
     -X POST \
     -d @- \
     -H "Authorization: Bearer $TOKEN" \
@@ -11,26 +10,24 @@ $ curl -k \
   "kind": "Secret",
   "apiVersion": "v1",
   "metadata": {
-    "name": "projectname-secret"
+    "name": "aa-secret"
   },
   "stringData": {
-	"PROJECT_DESCRIPTION": "my template instance project description",
-	"PROJECT_DISPLAYNAME": "my template instance project displayname",
-	"PROJECT_REQUESTING_USER": "abhiroop",
-	"PROJECT_NAME": "abhiroop-template-project",
-	"PROJECT_CPU": "1",
-	"PROJECT_MEMORY": "4Gi",
-	"PROJECT_STORAGE": "10Gi",
-	"PROJECT_AD_GROUP": "scvtest"
+        "PROJECT_DESCRIPTION": "project description",
+        "PROJECT_DISPLAYNAME": "project displayname",
+        "PROJECT_REQUESTING_USER": "abhiroop",
+        "PROJECT_NAME": "AA-template-project",
+        "PROJECT_CPU": "1",
+        "PROJECT_MEMORY": "4Gi",
+        "PROJECT_STORAGE": "10Gi",
+        "PROJECT_AD_GROUP": "scvtest"
   }
 }
 EOF
 
-####################### Project servicenow
+################ TEMPLATE INSTANCE CREATE ####
 
-
-
-$ curl -k \
+curl -k \
     -X POST \
     -d @- \
     -H "Authorization: Bearer $TOKEN" \
@@ -41,18 +38,54 @@ $ curl -k \
   "kind": "TemplateInstance",
   "apiVersion": "template.openshift.io/v1",
   "metadata": {
-    "name": "project-request-instance"
+    "name": "aa-request"
   },
   "spec": {
     "secret": {
-      "name": "projectname-secret"
+      "name": "aa-secret"
     },
     "template": $(curl -k \
                     -H "Authorization: Bearer $TOKEN" \
                     -H 'Accept: application/json' \
-                    https://$ENDPOINT/apis/template.openshift.io/v1/namespaces/$NAMESPACE/templates/project-request)
+                    https://$ENDPOINT/apis/template.openshift.io/v1/namespaces/$NAMESPACE/templates/project-request-template)
   }
 }
 EOF
 
-######################
+
+######## DELETE SECRET #################
+
+curl -k \
+    -X DELETE \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$ENDPOINT/api/v1/namespaces/$NAMESPACE/secrets/aa-secret <<'EOF'
+{
+  
+}
+EOF
+
+
+########### GET A TEMPLATE INSTANCE #################
+
+curl -k \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    https://$ENDPOINT/apis/template.openshift.io/v1/namespaces/$NAMESPACE/templateinstances/$INSTANCENAME
+	
+	
+##############  DELETE TEMPLATE INSTANCE #############
+
+curl -k \
+    -X DELETE \
+    -d @- \
+    -H "Authorization: Bearer $TOKEN" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    https://$ENDPOINT/apis/template.openshift.io/v1/namespaces/$NAMESPACE/templateinstances/$INSTANCENAME <<'EOF'
+	{
+
+	}
+	EOF
